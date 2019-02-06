@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 import java.util.Random;
 
 /**
@@ -8,7 +8,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
-public class Rabbit extends Animal
+public class Rabbit extends Animal 
 {
     // Characteristics shared by all rabbits (class variables).
 
@@ -16,16 +16,21 @@ public class Rabbit extends Animal
     private static final int BREEDING_AGE = 5;
     // The age to which a rabbit can live.
     private static final int MAX_AGE = 40;
-    // The likelihood of a rabbit breeding.
     private static final double BREEDING_PROBABILITY = 0.12;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+
+    private  String sex;
+
+    private int sexProbablity;
     
+    private List<String>gender_list =new ArrayList<>();
+
     // Individual characteristics (instance fields).
-    
-    
+    // The rabbit's age.
+    private int age;
 
     /**
      * Create a new rabbit. A rabbit may be created with age
@@ -35,14 +40,15 @@ public class Rabbit extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Rabbit(boolean randomAge, Field field, Location location)
+    public Rabbit(boolean randomAge, Field field, Location location,String sex)
     {
         super(field, location);
+        age = 0;
         if(randomAge) {
-            setAge(rand.nextInt(MAX_AGE));
+            age = rand.nextInt(MAX_AGE);
         }
     }
-    
+
     /**
      * This is what the rabbit does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
@@ -64,20 +70,28 @@ public class Rabbit extends Animal
             }
         }
     }
-
     /**
      * Increase the age.
      * This could result in the rabbit's death.
      */
-    protected void incrementAge()
+    private void incrementAge()
     {
-        super.incrementAge();
-        if(getAge() > MAX_AGE) {
+        age++;
+        if(age > MAX_AGE) {
             setDead();
         }
     }
-    
-    /**
+    private String sex()
+    {
+        return sex;
+    }
+    private void get_detail()
+    {
+        System.out.println(sex+"    "+age+"      ");
+
+    }
+
+    /** 
      * Check whether or not this rabbit is to give birth at this step.
      * New births will be made into free adjacent locations.
      * @param newRabbits A list to return newly born rabbits.
@@ -87,24 +101,45 @@ public class Rabbit extends Animal
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Rabbit young = new Rabbit(false, field, loc);
-            newRabbits.add(young);
+        Object animal2=field.getObjectAt(getLocation());
+        for(Location locate : field.adjacentLocations(getLocation()))
+        {
+            Object animal1=field.getObjectAt(locate);
+            if(animal1 instanceof Rabbit&&animal2 instanceof Rabbit)
+            {
+                Rabbit rabbit1=(Rabbit)animal1;
+                Rabbit rabbit2=(Rabbit)animal2; 
+                sex=getGender();
+                if(!rabbit1.getGender().equals(rabbit2.getGender()))
+                {
+                    List<Location> free = field.getFreeAdjacentLocations(getLocation());
+                    int births = breed();
+                    for(int b = 0; b < births && free.size() > 0; b++) {
+                        Location loc = free.remove(0);
+                        Rabbit young = new Rabbit(false, field, loc,sex);
+                        newRabbits.add(young);
+                    }
+                }
+            }
         }
     }
-        
+    //
+    //
+    public void setSex()
+    {
+        sex=getGender();
+    }
+    
     /**
      * Generate a number representing the number of births,
      * if it can breed.
      * @return The number of births (may be zero).
      */
+
     private int breed()
     {
         int births = 0;
-        if(super.canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
+        if(canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
             births = rand.nextInt(MAX_LITTER_SIZE) + 1;
         }
         return births;
@@ -114,8 +149,8 @@ public class Rabbit extends Animal
      * A rabbit can breed if it has reached the breeding age.
      * @return true if the rabbit can breed, false otherwise.
      */
-    protected int getBREEDINGAGE()
+    private boolean canBreed()
     {
-        return BREEDING_AGE;
+        return age >= BREEDING_AGE;
     }
 }

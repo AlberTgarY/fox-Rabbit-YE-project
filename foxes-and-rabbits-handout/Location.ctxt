@@ -1,6 +1,5 @@
 #BlueJ class context
 comment0.target=Location
-comment0.text=\n\ Represent\ a\ location\ in\ a\ rectangular\ grid.\n\ \n\ @author\ David\ J.\ Barnes\ and\ Michael\ K\u00F6lling\n\ @version\ 2016.02.29\n
 comment1.params=row\ col
 comment1.target=Location(int,\ int)
 comment1.text=\n\ Represent\ a\ row\ and\ column.\n\ @param\ row\ The\ row.\n\ @param\ col\ The\ column.\n

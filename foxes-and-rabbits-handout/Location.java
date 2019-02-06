@@ -1,9 +1,11 @@
+
 /**
  * Represent a location in a rectangular grid.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29
  */
+import java.util.*;
 public class Location
 {
     // Row and column positions.
@@ -62,7 +64,7 @@ public class Location
     {
         return row;
     }
-    
+   
     /**
      * @return The column.
      */
@@ -70,4 +72,6 @@ public class Location
     {
         return col;
     }
+    
+    
 }

@@ -19,9 +19,9 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
+    private static final double FOX_CREATION_PROBABILITY = 0.001;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
+    private static final double RABBIT_CREATION_PROBABILITY = 0.002;    
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -31,7 +31,7 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
-    
+
     /**
      * Construct a simulation field with default size.
      */
@@ -39,7 +39,7 @@ public class Simulator
     {
         this(DEFAULT_DEPTH, DEFAULT_WIDTH);
     }
-    
+
     /**
      * Create a simulation field with the given size.
      * @param depth Depth of the field. Must be greater than zero.
@@ -53,7 +53,7 @@ public class Simulator
             depth = DEFAULT_DEPTH;
             width = DEFAULT_WIDTH;
         }
-        
+
         animals = new ArrayList<>();
         field = new Field(depth, width);
 
@@ -61,11 +61,11 @@ public class Simulator
         view = new SimulatorView(depth, width);
         view.setColor(Rabbit.class, Color.ORANGE);
         view.setColor(Fox.class, Color.BLUE);
-        
+
         // Setup a valid starting point.
         reset();
     }
-    
+
     /**
      * Run the simulation from its current state for a reasonably long period,
      * (4000 steps).
@@ -74,7 +74,7 @@ public class Simulator
     {
         simulate(4000);
     }
-    
+
     /**
      * Run the simulation from its current state for the given number of steps.
      * Stop before the given number of steps if it ceases to be viable.
@@ -87,7 +87,7 @@ public class Simulator
             // delay(60);   // uncomment this to run more slowly
         }
     }
-    
+
     /**
      * Run the simulation from its current state for a single step.
      * Iterate over the whole field updating the state of each
@@ -107,13 +107,13 @@ public class Simulator
                 it.remove();
             }
         }
-               
+
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
         view.showStatus(step, field);
     }
-        
+
     /**
      * Reset the simulation to a starting position.
      */
@@ -122,11 +122,11 @@ public class Simulator
         step = 0;
         animals.clear();
         populate();
-        
+
         // Show the starting state in the view.
         view.showStatus(step, field);
     }
-    
+
     /**
      * Randomly populate the field with foxes and rabbits.
      */
@@ -134,23 +134,30 @@ public class Simulator
     {
         Random rand = Randomizer.getRandom();
         field.clear();
+        
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
                 if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Fox fox = new Fox(true, field, location);
-                    animals.add(fox);
+                    animals.add(fox);     
                 }
                 else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                    Gender gender= new Gender();
+                    gender.get_gender();
                     Location location = new Location(row, col);
-                    Rabbit rabbit = new Rabbit(true, field, location);
+                    Rabbit rabbit = new Rabbit(true, field, location,"error"); 
+                    rabbit.setSex();
                     animals.add(rabbit);
                 }
-                // else leave the location empty.
+
             }
+            // else leave the location empty.
+
         }
+
     }
-    
+
     /**
      * Pause for a given time.
      * @param millisec  The time to pause for, in milliseconds

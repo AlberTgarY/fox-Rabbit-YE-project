@@ -10,13 +10,13 @@ public abstract class Animal
 {
     // Whether the animal is alive or not.
     private boolean alive;
-    private int age;
     // The animal's field.
     private Field field;
-
     // The animal's position in the field.
     private Location location;
-
+    
+    private Gender gender;
+    
     /**
      * Create a new animal at location in field.
      * 
@@ -29,14 +29,13 @@ public abstract class Animal
         this.field = field;
         setLocation(location);
     }
-
+    
     /**
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.
      * @param newAnimals A list to receive newly born animals.
      */
     abstract public void act(List<Animal> newAnimals);
-
     /**
      * Check whether the animal is alive or not.
      * @return true if the animal is still alive.
@@ -45,32 +44,6 @@ public abstract class Animal
     {
         return alive;
     }
-    
-    protected boolean canBreed()
-    {
-        return getAge() >= getBREEDINGAGE();
-    }
-    
-    protected void incrementAge()
-    {
-        age++;   
-    }
-    
-    abstract protected int getBREEDINGAGE();
-    
-    /**
-     * 
-     * 
-     */
-    protected void setAge(int Age)
-    {
-        this.age= age; 
-    }   
-    
-    protected int getAge()
-    {
-        return age;
-    }  
 
     /**
      * Indicate that the animal is no longer alive.
@@ -94,7 +67,7 @@ public abstract class Animal
     {
         return location;
     }
-
+    
     /**
      * Place the animal at the new location in the given field.
      * @param newLocation The animal's new location.
@@ -107,7 +80,13 @@ public abstract class Animal
         location = newLocation;
         field.place(this, newLocation);
     }
-
+    
+    protected String getGender()
+    {
+       gender= new Gender();
+       return gender.get_gender();
+    }    
+    
     /**
      * Return the animal's field.
      * @return The animal's field.
