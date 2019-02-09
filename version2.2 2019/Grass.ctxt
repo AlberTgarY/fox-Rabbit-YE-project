@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=Grass
+comment0.text=\r\n\ \u5728\u8FD9\u91CC\u7ED9\u51FA\u5BF9\u7C7B\ grass\ \u7684\u63CF\u8FF0\u3002\r\n\ \r\n\ @\u4F5C\u8005\uFF08\u4F60\u7684\u540D\u5B57\uFF09\r\n\ @\u7248\u672C\uFF08\u4E00\u4E2A\u7248\u672C\u53F7\u6216\u8005\u4E00\u4E2A\u65E5\u671F\uFF09\r\n
+comment1.params=randomAge\ field\ location\ Eatable
+comment1.target=Grass(boolean,\ Field,\ Location,\ boolean)
+comment1.text=\r\n\ \u7C7B\ grass\ \u7684\u5BF9\u8C61\u7684\u6784\u9020\u51FD\u6570\r\n
+comment2.params=newGrass
+comment2.target=void\ act_Sunny(java.util.List)
+comment3.params=newGrass
+comment3.target=void\ act_Rainy(java.util.List)
+comment4.params=
+comment4.target=void\ incrementAge()
+comment5.params=
+comment5.target=void\ incrementWater()
+comment6.params=
+comment6.target=int\ getAge()
+comment7.params=newGrass
+comment7.target=void\ giveBirth(java.util.List)
+comment8.params=
+comment8.target=int\ breed()
+numComments=9
