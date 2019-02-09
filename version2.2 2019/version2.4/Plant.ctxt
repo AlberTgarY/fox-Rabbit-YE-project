@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=Plant
+comment0.text=\r\n\ \u5728\u8FD9\u91CC\u7ED9\u51FA\u5BF9\u7C7B\ plant\ \u7684\u63CF\u8FF0\u3002\r\n\ \r\n\ @\u4F5C\u8005\uFF08\u4F60\u7684\u540D\u5B57\uFF09\r\n\ @\u7248\u672C\uFF08\u4E00\u4E2A\u7248\u672C\u53F7\u6216\u8005\u4E00\u4E2A\u65E5\u671F\uFF09\r\n
+comment1.params=field\ location
+comment1.target=Plant(Field,\ Location)
+comment1.text=\r\n\ \u7C7B\ plant\ \u7684\u5BF9\u8C61\u7684\u6784\u9020\u51FD\u6570\r\n
+comment10.params=
+comment10.target=boolean\ isAlive()
+comment2.params=newLocation
+comment2.target=void\ setLocation(Location)
+comment3.params=
+comment3.target=boolean\ If_canEat()
+comment4.params=
+comment4.target=Field\ getField()
+comment5.params=
+comment5.target=void\ setDead()
+comment6.params=
+comment6.target=boolean\ canEat()
+comment7.params=newPlants
+comment7.target=void\ act_Sunny(java.util.List)
+comment8.params=newPlants
+comment8.target=void\ act_Rainy(java.util.List)
+comment9.params=
+comment9.target=Location\ getLocation()
+numComments=11
