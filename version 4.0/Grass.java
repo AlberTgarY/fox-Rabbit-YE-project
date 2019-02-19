@@ -11,7 +11,7 @@ public class Grass extends Plant
     private static final int EAT_AGE = 3;
     private static final int MAX_AGE = 15;
 
-    private static final double BREEDING_PROBABILITY = 0.2;
+    private static final double BREEDING_PROBABILITY = 0.3;
     private static final int WATER_LEVEL = 50;
 
     // The maximum number of births.
@@ -49,16 +49,6 @@ public class Grass extends Plant
         else{}    
     }
 
-    /*
-     * public int getProportion()
-    {
-    Random rand = new Random();
-    int i=rand.nextInt(toxic_PROBABILITY.size());
-    int total;
-    total= toxic_PROBABILITY.get(i);
-    return total;
-    }
-     */ 
 
     public void act_Rainy(List<Plant> newGrass)
     {
@@ -100,7 +90,7 @@ public class Grass extends Plant
             for(int b = 0; b < births && free.size() > 0; b++) {
                 Location loc = free.remove(0);
                 int nextRand = Rand.nextInt(1000);
-                if(nextRand<=999)
+                if(nextRand<=990)
                 {
                     Grass young = new Grass(false, field, loc,false,false);
                     newGrass.add(young);

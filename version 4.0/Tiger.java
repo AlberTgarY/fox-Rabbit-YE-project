@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * A simple model of a fox.
- * Foxes age, move, eat rabbits, and die.
+ * Foxes age, move, eat Deers, and die.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
@@ -18,12 +18,13 @@ public class Tiger  extends Animal
     // The age to which a fox can live.
     private static final int MAX_AGE = 200;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.9;
+    private static final double BREEDING_PROBABILITY = 0.25;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 1;
-    // The food value of a single rabbit. In effect, this is the
+    private static final double HUNT_PROBABILITY=0.7;
+    // The food value of a single Deer. In effect, this is the
     // number of steps a fox can go before it has to eat again.
-    private static final int RABBIT_COW_FOOD_VALUE = 40;
+    private static final int Deer_COW_FOOD_VALUE = 80;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
 
@@ -32,9 +33,9 @@ public class Tiger  extends Animal
     private int sexProbablity;
 
     // Individual characteristics (instance fields).
-    // The rabbit's age.
+    // The Deer's age.
 
-    // The fox's food level, which is increased by eating rabbits.
+    // The fox's food level, which is increased by eating Deers.
     private int foodLevel;
 
     /**
@@ -50,17 +51,17 @@ public class Tiger  extends Animal
         super(field, location,yearStage,sex,ill);
         if(randomAge) {
             setAge(rand.nextInt(MAX_AGE));
-            foodLevel = rand.nextInt(RABBIT_COW_FOOD_VALUE);
+            foodLevel = rand.nextInt(Deer_COW_FOOD_VALUE);
         }
         else {
             setAge(0);
-            foodLevel = RABBIT_COW_FOOD_VALUE;
+            foodLevel = Deer_COW_FOOD_VALUE;
         }
     }
 
     /**
      * This is what the fox does most of the time: it hunts for
-     * rabbits. In the process, it might breed, die of hunger,
+     * Deers. In the process, it might breed, die of hunger,
      * or die of old age.
      * @param field The field currently occupied.
      * @param newFoxes A list to return newly born foxes.
@@ -117,8 +118,8 @@ public class Tiger  extends Animal
     }
 
     /**
-     * Look for rabbits adjacent to the current location.
-     * Only the first live rabbit is eaten.
+     * Look for Deers adjacent to the current location.
+     * Only the first live Deer is eaten.
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
@@ -129,18 +130,18 @@ public class Tiger  extends Animal
         while(it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal instanceof Rabbit) {
-                Rabbit rabbit = (Rabbit) animal;
-                if(rabbit.isAlive()) { 
-                    rabbit.setDead();
-                    if(rabbit.If_getIll())
+            if(animal instanceof Deer) {
+                Deer Deer = (Deer) animal;
+                if(Deer.isAlive()) { 
+                    Deer.setDead();
+                    if(Deer.If_getIll())
                     {
                     foodLevel+=10;
                     getIll();
                 }
                 else
                 {
-                    foodLevel=RABBIT_COW_FOOD_VALUE/2;
+                    foodLevel=Deer_COW_FOOD_VALUE/2;
                 }
                 return where;
             }
@@ -151,13 +152,13 @@ public class Tiger  extends Animal
                     cow.setDead();
                     if(cow.If_getIll())
                     {
-                    foodLevel = RABBIT_COW_FOOD_VALUE/2;
+                    foodLevel = Deer_COW_FOOD_VALUE/2;
                     getIll();
                     return where;
                 }
                 else
                 {
-                    foodLevel=RABBIT_COW_FOOD_VALUE;
+                    foodLevel=Deer_COW_FOOD_VALUE;
                     return where;
                 }
                 }
@@ -165,8 +166,7 @@ public class Tiger  extends Animal
         }
         return null;
     }
-    
-    
+     
     /**
      * Check whether or not this fox is to give birth at this step.
      * New births will be made into free adjacent locations.
@@ -176,7 +176,7 @@ public class Tiger  extends Animal
     {
         Field field = getField();
         Object animal2=field.getObjectAt(getLocation());
-        for(Location locate : field.adjacentLocations(getLocation()))
+         for(Location locate : field.adjacentLocations(getLocation()))
         {
             Object animal1=field.getObjectAt(locate);
             if(animal1 instanceof Tiger&&animal2 instanceof Tiger)
@@ -187,61 +187,40 @@ public class Tiger  extends Animal
                 {
                     List<Location> free = field.getFreeAdjacentLocations(getLocation());
                     int births = breed();
+
+                    for(int b = 0; b < births && free.size() > 0; b++) {
+                        Location loc = free.remove(0);
+                        Tiger young = new Tiger(false, field, loc,"young"," ",false);
+                        young.getGender();
+                        young.set_Yearstage(young.getAge(),MAX_AGE);
+                        newTigers.add(young);
                         if(!tiger1.If_getIll()&&!tiger2.If_getIll())
-                    {
-                        for(int b = 0; b < births && free.size() > 0; b++) {
-                            Location loc = free.remove(0);
-                            Tiger young = new Tiger(false, field, loc,"young"," ",false);
-                            young.getGender();
-                            newTigers.add(young);
-                            young.set_Yearstage(getAge(),MAX_AGE);
-                            if(tiger1.getSex().equals("Male"))
-                            {
-                                young.set_Father(tiger1);
-                                young.set_Mother(tiger2);
-                            }
-                            else
-                            {
-                                young.set_Mother(tiger1);
-                                young.set_Father(tiger2);
-                            }
-                            tiger1.set_Child(young);
-                            tiger1.set_Couple(tiger2);
-                            tiger2.set_Couple(tiger1);
-                            tiger2.set_Child(young);
+                        {
+                            //born the Deer commonly;
                         }
-                    }
-                    else
-                    {
-                         for(int b = 0; b < births && free.size() > 0; b++) {
-                            Location loc = free.remove(0);
-                            Tiger young = new Tiger(false, field, loc,"young"," ",false);
-                            young.getGender();
-                            young.getIll();
-                            newTigers.add(young);
-                            young.set_Yearstage(getAge(),MAX_AGE);
-                            if(tiger1.getSex().equals("Male"))
-                            {
-                                young.set_Father(tiger1);
-                                young.set_Mother(tiger2);
-                            }
-                            else
-                            {
-                                young.set_Mother(tiger1);
-                                young.set_Father(tiger2);
-                            }
-                            tiger1.set_Child(young);
-                            tiger1.set_Couple(tiger2);
-                            tiger2.set_Couple(tiger1);
-                            tiger2.set_Child(young);
+                        else{young.getIll();}
+                        if(tiger1.getSex().equals("Male"))
+                        {
+                            young.set_Father(tiger1);
+                            young.set_Mother(tiger2);
                         }
+                        else
+                        {
+                            young.set_Mother(tiger1);
+                            young.set_Father(tiger2);
+                        }
+                        tiger1.set_Couple(tiger2);
+                        tiger2.set_Couple(tiger1);
+                        tiger1.set_Child(young);
+                        tiger2.set_Child(young);
                     }
+
                 }
             }
         }   
     
     }
-
+    
     /**
      * Generate a number representing the number of births,
      * if it can breed.
@@ -255,7 +234,19 @@ public class Tiger  extends Animal
         }
         return births;
     }
-
+    
+    private boolean can_hunt()
+    {
+      Random rando= new Random();
+        if(rando.nextDouble()>=HUNT_PROBABILITY)
+      {
+         return true; 
+        }
+      else
+      {
+          return false;}
+    }
+    
     /**
      * A fox can breed if it has reached the breeding age.
      */

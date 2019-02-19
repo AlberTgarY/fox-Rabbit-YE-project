@@ -6,7 +6,7 @@ import java.awt.Color;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
- * containing rabbits and foxes.
+ * containing Deers and Snakees.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
@@ -19,14 +19,14 @@ public class Simulator
     private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0;//2;
-    // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.04;   
-    private static final double COW_CREATION_PROBABILITY= 0;
-    private static final double GRASS_CREATION_PROBABILITY = 0.2;    
-    private static final double TIGER_CREATION_PROBABILITY = 0;   
-    private static final double WOLF_CREATION_PROBABILITY=0;
+    // The probability that a Snake will be created in any given grid position.
+    private static final double Snake_CREATION_PROBABILITY = 0.08;
+    // The probability that a Deer will be created in any given grid position.
+    private static final double Deer_CREATION_PROBABILITY = 0.20;   
+    private static final double COW_CREATION_PROBABILITY= 0.07;
+    private static final double GRASS_CREATION_PROBABILITY = 0.19;    
+    private static final double TIGER_CREATION_PROBABILITY = 0.08;   
+    private static final double WOLF_CREATION_PROBABILITY=0.08;
     // List of animals in the field.
     private List<Animal> animals;
     private String currentWeather;
@@ -70,8 +70,8 @@ public class Simulator
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
 
-        view.setColor(Rabbit.class, Color.ORANGE);
-        view.setColor(Fox.class, Color.BLUE);
+        view.setColor(Deer.class, Color.ORANGE);
+        view.setColor(Snake.class, Color.BLUE);
         view.setColor(Tiger.class, Color.RED);
         view.setColor(Grass.class, Color.GREEN);
         view.setColor(Cow.class,Color.lightGray);
@@ -124,7 +124,7 @@ public class Simulator
     /**
      * Run the simulation from its current state for a single step.
      * Iterate over the whole field updating the state of each
-     * fox and rabbit.
+     * Snake and Deer.
      */
     public void simulateOneStep()
     {
@@ -141,7 +141,7 @@ public class Simulator
         // Provide space for newborn animals.
         List<Animal> newAnimals = new ArrayList<>();   
         List<Plant> newPlants = new ArrayList<>();
-        // Let all rabbits act.
+        // Let all Deers act.
         if(step%2==0)
         { 
             for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) { 
@@ -200,7 +200,7 @@ public class Simulator
                 }
             }
         }
-        // Add the newly born foxes and rabbits to the main lists.
+        // Add the newly born Snakees and Deers to the main lists.
         currentWeather = getWeather();
         animals.addAll(newAnimals);
         plants.addAll(newPlants);
@@ -223,7 +223,7 @@ public class Simulator
     }
 
     /**
-     * Randomly populate the field with foxes and rabbits.
+     * Randomly populate the field with Snakees and Deers.
      */
     private void populate()
     {
@@ -236,21 +236,21 @@ public class Simulator
 
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                if(rand.nextDouble() <= Snake_CREATION_PROBABILITY) {
                     Gender gender= new Gender();
                     gender.get_gender();
                     Location location = new Location(row, col);
-                    Fox fox = new Fox(true, field, location,"young","",false);
-                    fox.setSex();
-                    animals.add(fox);     
+                    Snake Snake = new Snake(true, field, location,"young","",false);
+                    Snake.setSex();
+                    animals.add(Snake);     
                 }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= Deer_CREATION_PROBABILITY) {
                     Gender gender= new Gender();
                     gender.get_gender();
                     Location location = new Location(row, col);
-                    Rabbit rabbit = new Rabbit(true, field, location ,"young","",false); 
-                    rabbit.setSex();
-                    animals.add(rabbit);
+                    Deer Deer = new Deer(true, field, location ,"young","",false); 
+                    Deer.setSex();
+                    animals.add(Deer);
                 }
                 else if(rand.nextDouble() <= GRASS_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);

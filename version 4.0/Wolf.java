@@ -16,14 +16,15 @@ public class Wolf  extends Animal
     // The age at which a fox can start to breed.
     private static final int BREEDING_AGE = 20;
     // The age to which a fox can live.
-    private static final int MAX_AGE = 200;
+    private static final int MAX_AGE = 80;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.9;
+    private static final double BREEDING_PROBABILITY = 0.25;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 1;
     // The food value of a single Wolf. In effect, this is the
+    private static final double HUNT_PROBABILITY=0.9;
     // number of steps a fox can go before it has to eat again.
-    private static final int RABBIT_COW_FOOD_VALUE = 40;
+    private static final int Deer_COW_FOOD_VALUE = 40;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
 
@@ -50,11 +51,11 @@ public class Wolf  extends Animal
         super(field, location,yearStage,sex,ill);
         if(randomAge) {
             setAge(rand.nextInt(MAX_AGE));
-            foodLevel = rand.nextInt(RABBIT_COW_FOOD_VALUE);
+            foodLevel = rand.nextInt(Deer_COW_FOOD_VALUE);
         }
         else {
             setAge(0);
-            foodLevel = RABBIT_COW_FOOD_VALUE;
+            foodLevel = Deer_COW_FOOD_VALUE;
         }
     }
 
@@ -129,18 +130,18 @@ public class Wolf  extends Animal
         while(it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal instanceof Rabbit) {
-                Rabbit  rabbit= (Rabbit) animal;
-                if(rabbit.isAlive()) { 
-                    rabbit.setDead();
-                    if(rabbit.If_getIll())
+            if(animal instanceof Deer) {
+                Deer  Deer= (Deer) animal;
+                if(Deer.isAlive()&&can_hunt()) { 
+                    Deer.setDead();
+                    if(Deer.If_getIll())
                     {
                     foodLevel+=10;
                     getIll();
                 }
                 else
                 {
-                    foodLevel=RABBIT_COW_FOOD_VALUE/2;
+                    foodLevel=Deer_COW_FOOD_VALUE/2;
                 }
                 return where;
             }
@@ -151,13 +152,13 @@ public class Wolf  extends Animal
                     cow.setDead();
                     if(cow.If_getIll())
                     {
-                    foodLevel = RABBIT_COW_FOOD_VALUE/2;
+                    foodLevel = Deer_COW_FOOD_VALUE/2;
                     getIll();
                     return where;
                 }
                 else
                 {
-                    foodLevel=RABBIT_COW_FOOD_VALUE;
+                    foodLevel=Deer_COW_FOOD_VALUE;
                     return where;
                 }
                 }
@@ -181,26 +182,40 @@ public class Wolf  extends Animal
             Object animal1=field.getObjectAt(locate);
             if(animal1 instanceof Wolf&&animal2 instanceof Wolf)
             {
-                Wolf Wolf1=(Wolf)animal1;
-                Wolf Wolf2=(Wolf)animal2;
-                if(!Wolf1.getSex().equals(Wolf2.getSex()))
+                Wolf wolf1=(Wolf)animal1;
+                Wolf wolf2=(Wolf)animal2;
+                if(!wolf1.getSex().equals(wolf2.getSex()))
                 {
                     List<Location> free = field.getFreeAdjacentLocations(getLocation());
                     int births = breed();
+
                     for(int b = 0; b < births && free.size() > 0; b++) {
                         Location loc = free.remove(0);
                         Wolf young = new Wolf(false, field, loc,"young"," ",false);
                         young.getGender();
+                        young.set_Yearstage(young.getAge(),MAX_AGE);
                         newWolfs.add(young);
-                        if(!Wolf1.getIll()&&!Wolf2.getIll())
+                        if(!wolf1.If_getIll()&&!wolf2.If_getIll())
                         {
-                            //born the Wolf;
+                            //born the Deer commonly;
+                        }
+                        else{young.getIll();}
+                        if(wolf1.getSex().equals("Male"))
+                        {
+                            young.set_Father(wolf1);
+                            young.set_Mother(wolf2);
                         }
                         else
                         {
-                          young.If_getIll();   
+                            young.set_Mother(wolf1);
+                            young.set_Father(wolf2);
                         }
+                        wolf1.set_Couple(wolf2);
+                        wolf2.set_Couple(wolf1);
+                        wolf1.set_Child(young);
+                        wolf2.set_Child(young);
                     }
+
                 }
             }
         }   
@@ -221,6 +236,17 @@ public class Wolf  extends Animal
         return births;
     }
 
+    private boolean can_hunt()
+    {
+      Random rando= new Random();
+        if(rando.nextDouble()>=HUNT_PROBABILITY)
+      {
+         return true; 
+        }
+      else
+      {
+          return false;}
+    }
     /**
      * A fox can breed if it has reached the breeding age.
      */

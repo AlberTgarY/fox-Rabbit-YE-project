@@ -13,7 +13,7 @@ public class Cow extends Animal
     private static final int BREEDING_AGE = 10;
     // The age to which a rabbit can live.
     private static final int MAX_AGE = 100;
-    private static final double BREEDING_PROBABILITY = 0.3;
+    private static final double BREEDING_PROBABILITY = 0.25;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
 
@@ -131,35 +131,48 @@ public class Cow extends Animal
         // Get a list of adjacent free locations.
         Field field = getField();
         Object animal2=field.getObjectAt(getLocation());
-        for(Location locate : field.adjacentLocations(getLocation()))
+       for(Location locate : field.adjacentLocations(getLocation()))
         {
             Object animal1=field.getObjectAt(locate);
             if(animal1 instanceof Cow&&animal2 instanceof Cow)
             {
                 Cow cow1=(Cow)animal1;
-                Cow cow2=(Cow)animal2; 
+                Cow cow2=(Cow)animal2;
                 if(!cow1.getSex().equals(cow2.getSex()))
                 {
                     List<Location> free = field.getFreeAdjacentLocations(getLocation());
                     int births = breed();
-                   
+
                     for(int b = 0; b < births && free.size() > 0; b++) {
-                        Location loc = free.remove(0);                
-                        Cow  young = new Cow(false, field, loc,"young","",false);
+                        Location loc = free.remove(0);
+                        Cow young = new Cow(false, field, loc,"young"," ",false);
                         young.getGender();
-                        young.set_Yearstage(getAge(),MAX_AGE);
-                        
+                        young.set_Yearstage(young.getAge(),MAX_AGE);
+                        newCows.add(young);
                         if(!cow1.If_getIll()&&!cow2.If_getIll())
                         {
-                            
+                            //born the rabbit commonly;
                         }
-                        else{young.getIll();};
-                        
-                        newCows.add(young);
+                        else{young.getIll();}
+                        if(cow1.getSex().equals("Male"))
+                        {
+                            young.set_Father(cow1);
+                            young.set_Mother(cow2);
+                        }
+                        else
+                        {
+                            young.set_Mother(cow1);
+                            young.set_Father(cow2);
+                        }
+                        cow1.set_Couple(cow2);
+                        cow2.set_Couple(cow1);
+                        cow1.set_Child(young);
+                        cow2.set_Child(young);
                     }
+
                 }
             }
-        }
+        }   
         }
 
     /**
