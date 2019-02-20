@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Gender
+comment0.text=\r\n\ Provide\ a\ random\ gender\ for\ every\ animal.\r\n\r\n@author\:\ YICHENG\ ZHAN\ and\ YE\ MAO;\r\n
+comment1.params=
+comment1.target=Gender()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ gender\r\n
+comment2.params=
+comment2.target=java.lang.String\ get_gender()
+comment2.text=\r\n\ Get\ a\ random\ gender\r\n\ \r\n\ @return\:\ get\ a\ random\ gender;\r\n
+numComments=3
