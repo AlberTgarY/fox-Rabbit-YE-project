@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Weather
+comment0.text=\r\n\ A\ class\ that\ contains\ the\ weather\ of\ the\ simulator.\r\n\ \r\n\ Author\:\ ZHANYICHENG\ &\ MAOYE;\r\n
+comment1.params=
+comment1.target=Weather()
+comment1.text=\r\n\ initialize\ the\ weathers\ of\ the\ simulator\r\n
+comment2.params=n
+comment2.target=java.lang.String\ choose_Weather(int)
+comment2.text=\r\n\ get\ a\ weather\ for\ simulator`s\ next\ step.\r\n\ @return\:\ return\ a\ weather.\r\n
+comment3.params=
+comment3.target=java.lang.String\ get_Weather()
+comment3.text=\r\n\ get\ a\ random\ weather\ for\ simulator`s\ next\ step.\r\n\ @return\:\ return\ a\ random\ weather.\r\n
+numComments=4

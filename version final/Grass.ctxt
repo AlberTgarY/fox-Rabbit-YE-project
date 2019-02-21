@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=Grass
+comment0.text=\r\n\ A\ model\ of\ grass.\r\n\ It\ contains\ Grass\ age,\ waterlevel,\ breed,\ illness\ and\ die.\r\n\ \r\n\ @author\ ZHANYICHENG\ AND\ MAOYE\r\n
+comment1.params=randomAge\ field\ location\ Eatable\ toxic
+comment1.target=Grass(boolean,\ Field,\ Location,\ boolean,\ boolean)
+comment1.text=\r\n\ Create\ a\ new\ grass.\ A\ grass\ may\ be\ created\ with\ age\r\n\ zero\ (a\ new\ born)\ or\ with\ a\ random\ age.\r\n\ \r\n\ @param\ randomAge\ If\ true,\ the\ rabbit\ will\ have\ a\ random\ age.\r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n\ @param\ Eatable\ If\ true,\ the\ grass\ is\ eatable.\r\n\ @param\ Toxic\ If\ true,\ the\ grass\ contains\ a\ virus\ which\ causes\ a\ disease.\r\n
+comment2.params=newGrass
+comment2.target=void\ act_Sunny(java.util.List)
+comment2.text=\r\n\ the\ plant's\ actions\ in\ the\ sunny\ days.\r\n
+comment3.params=newGrass
+comment3.target=void\ act_Rainy(java.util.List)
+comment3.text=\r\n\ the\ plant's\ actions\ in\ the\ rainy\ days.\r\n
+comment4.params=
+comment4.target=void\ incrementAge()
+comment4.text=\r\n\r\n\ increase\ the\ age\ of\ the\ grass.\r\n\ and\ if\ the\ grass\ is\ larger\ than\ \r\n\ the\ EAT_AGE,\ the\ grass\ could\ be\ eaten\ by\ the\ animals.\r\n\ and\ if\ the\ grass\ is\ over\ than\ \r\n\ the\ MAX_AGE,\ the\ grass\ will\ set\ dead.\r\n\ \r\n
+comment5.params=
+comment5.target=void\ incrementWater()
+comment5.text=\r\n\ the\ grass\ will\ absorb\ water\ everyday.\r\n\ when\ the\ water\ level\ is\ smaller\ than\ 0,\ the\ grass\ \r\n\ will\ die.\r\n
+comment6.params=newGrass
+comment6.target=void\ giveBirth(java.util.List)
+comment6.text=\r\n\ the\ whole\ procedure\ to\ give\ birth\ to\ the\ grass.\ put\ them\r\n\ into\ the\ newGrass\ list.\r\n
+comment7.params=
+comment7.target=int\ breed()
+comment7.text=\r\n\ return\ the\ the\ number\ of\ newly\ born\ grasses.\r\n\ @\ return\ the\ number\ of\ the\ newly\ born\ grasses.\r\n
+numComments=8
